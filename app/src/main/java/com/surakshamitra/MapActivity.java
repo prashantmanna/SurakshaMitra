@@ -2,6 +2,7 @@ package com.surakshamitra;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -11,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,19 +22,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.common.api.internal.ApiKey;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,9 +49,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private EditText searchText;
     private ImageView gps;
 
-    private static final String apiKey = "AIzaSyDu5AUPz8pz55dDCqaGKxy4xHQymZbnK3w";
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,12 +57,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         searchText = findViewById(R.id.search);
         gps = findViewById(R.id.gps);
 
-
-
         getLocationPermission();
     }
-
-
 
     private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
@@ -112,9 +103,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap = googleMap;
         if (mLocationPermissionGranted) {
             getDeviceLocation();
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // Request location permissions again
+                getLocationPermission();
                 return;
             }
             mMap.setMyLocationEnabled(true);
@@ -134,8 +125,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         if (task.isSuccessful()) {
                             Location location = task.getResult();
                             if (location != null) {
-                                moveCamera(new LatLng(location.getLatitude(), location.getLongitude()), DEFAULT_ZOOM, "My Location");
-
+                                LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                moveCamera(currentLatLng, DEFAULT_ZOOM, "My Location");
                             }
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
@@ -163,7 +154,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         gps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,"onClick");
                 getDeviceLocation();
             }
         });
@@ -182,21 +172,29 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             list = geocoder.getFromLocationName(searchString, 1);
         } catch (IOException e) {
             Log.e(TAG, "geolocate: IOException: " + e.getMessage());
+            Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
         }
         if (list != null && list.size() > 0) {
             Address address = list.get(0);
             moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
+        } else {
+            Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void moveCamera(LatLng latLng, float zoom, String title) {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
+        MarkerOptions options = new MarkerOptions()
+                .position(latLng)
+                .title(title);
+        mMap.clear(); // Clear existing markers
+        mMap.addMarker(options);
 
-            MarkerOptions options = new MarkerOptions()
-                    .position(latLng)
-                    .title(title);
-            mMap.addMarker(options);
-
+        mMap.addCircle(new CircleOptions()
+                .center(latLng)
+                .radius(1000)
+                .strokeColor(Color.DKGRAY)
+                .fillColor(Color.parseColor("#80CCCCCC")));
     }
 }

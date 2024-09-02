@@ -29,15 +29,7 @@ public class chatAdaptor extends RecyclerView.Adapter<chatAdaptor.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         messageModel message = messageList.get(position);
-        if(message.getSentBy().equals(messageModel.SENT_BY_ME)){
-            holder.leftChatView.setVisibility(View.GONE);
-            holder.rightChatView.setVisibility(View.VISIBLE);
-            holder.rightTextView.setText(message.getMessage());
-        }else{
-            holder.rightChatView.setVisibility(View.GONE);
-            holder.leftChatView.setVisibility(View.VISIBLE);
-            holder.leftTextView.setText(message.getMessage());
-        }
+
     }
 
     @Override

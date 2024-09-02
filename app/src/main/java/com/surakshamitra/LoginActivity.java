@@ -1,10 +1,13 @@
 package com.surakshamitra;
 
+import static com.google.android.material.internal.ViewUtils.hideKeyboard;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,11 +16,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +41,9 @@ import com.google.firebase.database.Query;
 public class LoginActivity extends AppCompatActivity {
 
     public  static String LoginID = "MyProfile";
+
+    LottieAnimationView lottieAnimationView;
+    LinearLayout laout1;
     Dialog dialog;
     TextInputEditText Email,Password;
 
@@ -44,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth authUser;
 
-    TextView register,forgotPassword;
+    TextView register,forgotPassword,textotp;
     private static final String TAG = "LoginActivity";
 
 
@@ -63,6 +72,18 @@ public class LoginActivity extends AppCompatActivity {
         authUser = FirebaseAuth.getInstance();
         forgotPassword = findViewById(R.id.forgot);
 
+        textotp = findViewById(R.id.mobileOtp);
+
+
+        textotp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, mobileOtp.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 
 
@@ -80,16 +101,17 @@ public class LoginActivity extends AppCompatActivity {
                     Email.setError("Please Enter Your Email");
                     Email.requestFocus();
             }
-            else if (TextUtils.isEmpty(email)||!email.contains("@")) {
-                Email.setError("Email is not Valid");
+            else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Email.setError("Please Enter a Valid Email Address");
                 Email.requestFocus();
-
-            } else if (TextUtils.isEmpty(password) || password.length()<6) {
+            }
+            else if (TextUtils.isEmpty(password) || password.length()<6) {
 
                     Password.setError("Password should be valid");
                     Password.requestFocus();
                 }
             else {
+                hideKeyboard(v);
                 progressBar.setVisibility(View.VISIBLE);
                 loginUser(email,password);
             }
@@ -118,6 +140,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 
     private void loginUser(String email, String password) {
         if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches())
@@ -128,8 +155,8 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 finish();
                                 SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.LoginID, 0);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();

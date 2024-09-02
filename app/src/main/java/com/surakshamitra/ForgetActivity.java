@@ -12,12 +12,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.SignInMethodQueryResult;
 
 public class ForgetActivity extends AppCompatActivity {
 
@@ -47,22 +46,44 @@ public class ForgetActivity extends AppCompatActivity {
             }
         });
 
-
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 email = String.valueOf(edtResetEmail.getText());
-                if (email.isEmpty()) {
+                if (TextUtils.isEmpty(email)) {
                     edtResetEmail.setError("Email ID is required");
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    edtResetEmail.setError("Please enter a valid email address");
                 } else {
-                    forgotPass();
+                    // Check if email exists
+                    checkIfEmailExistsAndReset();
                 }
-
             }
-
         });
+    }
 
-
+    private void checkIfEmailExistsAndReset() {
+        // Check if the email exists in Firebase Authentication
+        auth.fetchSignInMethodsForEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                        if (task.isSuccessful()) {
+                            SignInMethodQueryResult result = task.getResult();
+                            if (result != null && result.getSignInMethods() != null
+                                    && result.getSignInMethods().size() > 0) {
+                                // Email exists, proceed with password reset
+                                forgotPass();
+                            } else {
+                                // Email does not exist
+                                Toast.makeText(ForgetActivity.this, "This email is not registered", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            // Error occurred while checking email existence
+                            Toast.makeText(ForgetActivity.this, "Error occurred. Please try again later.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void forgotPass() {
@@ -81,8 +102,5 @@ public class ForgetActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }
-
-

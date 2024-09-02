@@ -82,17 +82,19 @@ public class myAdaptor extends RecyclerView.Adapter<myAdaptor.ViewHolder> {
                             String number = edtNumber.getText().toString();
 
                             if (!id.isEmpty() && !name.isEmpty() && !number.isEmpty()) {
+
                                 boolean isUpdated = dBhelper.updateContact(id, name, number);
 
                                 if (isUpdated) {
-                                    arrContact.set(position, new model(id, R.drawable.user, name, number));
+                                    arrContact.set(position, new model(id, R.drawable.userperson, name, number));
                                     notifyItemChanged(position);
                                     Toast.makeText(context, "Contact Updated", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 } else {
                                     Toast.makeText(context, "Failed to update contact in the database", Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
+                            }
+                            else {
                                 Toast.makeText(context, "Please enter valid data", Toast.LENGTH_SHORT).show();
                             }
                         } else {

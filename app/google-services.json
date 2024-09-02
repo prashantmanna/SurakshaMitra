@@ -1,14 +1,14 @@
 {
   "project_info": {
-    "project_number": "204230432547",
-    "firebase_url": "https://surakshamitra-14857-default-rtdb.firebaseio.com",
-    "project_id": "surakshamitra-14857",
-    "storage_bucket": "surakshamitra-14857.appspot.com"
+    "project_number": "990301953362",
+    "firebase_url": "https://suraksha-28428-default-rtdb.firebaseio.com",
+    "project_id": "suraksha-28428",
+    "storage_bucket": "suraksha-28428.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:204230432547:android:cccd78b975277a3d889e96",
+        "mobilesdk_app_id": "1:990301953362:android:5ead609c6ba293b0546e8b",
         "android_client_info": {
           "package_name": "com.surakshamitra"
         }
@@ -16,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAUV5gAdSUbO3UWyitj7uQwkKNJomvSCFc"
+          "current_key": "AIzaSyAbc-okTElRgRxuI5cs4wGskEz64VTKW80"
         }
       ],
       "services": {

@@ -50,6 +50,7 @@ public class homefragment extends Fragment {
     CardView img1, img2, img3, img4;
     LottieAnimationView sendAnime;
     ConstraintLayout cardlocation;
+    private static final int MY_PHONE_CALL_PERMISSION_REQUEST = 1;
 
     FloatingActionButton contactsCall;
     MaterialButton medicalCall,policeCallBtn,womenHelpBtn,childHelpBtn;
@@ -93,9 +94,16 @@ public class homefragment extends Fragment {
         medicalCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:"+"+91108"));
-                startActivity(intent);
+                if(ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.CALL_PHONE)==PackageManager.PERMISSION_GRANTED)
+                {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:"+"+91108"));
+                    startActivity(intent);
+                }
+                else
+                {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PHONE_CALL_PERMISSION_REQUEST);
+                }
             }
         });
 
@@ -103,17 +111,31 @@ public class homefragment extends Fragment {
         policeCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:"+"+91112"));
-                startActivity(intent);
+                if(ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.CALL_PHONE)==PackageManager.PERMISSION_GRANTED)
+                {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:"+"+91112"));
+                    startActivity(intent);
+                }
+                else
+                {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PHONE_CALL_PERMISSION_REQUEST);
+                }
             }
         });
         womenHelpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:"+"+911091"));
-                startActivity(intent);
+                if(ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.CALL_PHONE)==PackageManager.PERMISSION_GRANTED)
+                {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    intent.setData(Uri.parse("tel:"+"+911091"));
+                    startActivity(intent);
+                }
+                else
+                {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CALL_PHONE}, MY_PHONE_CALL_PERMISSION_REQUEST);
+                }
             }
         });
 

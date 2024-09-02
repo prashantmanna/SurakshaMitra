@@ -1,4 +1,6 @@
 <resources>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
     <string name="app_name">Surakshaमित्र</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="already_have_an_account">Already Have An Account?</string>
@@ -141,4 +143,29 @@
     <string name="contact_info">Contact Info</string>
     <string name="get_current_location">GET CURRENT LOCATION</string>
     <string name="send_current_location">SEND CURRENT LOCATION</string>
+    <string name="logout1">logout</string>
+    <string name="settings1">settings</string>
+    <string name="profile3">profile</string>
+    <string name="confirm_logout">Confirm Logout</string>
+    <string name="are_you_sure_you_want_to_logout">Are you sure you want to logout?</string>
+    <string name="cancel">CANCEL</string>
+    <string name="logout12">LOGOUT</string>
+    <string name="send_otp">SEND OTP</string>
+    <string name="use_mobile_number">Use Mobile Number</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="next">NEXT</string>
+    <string name="otp_verification">Otp Verification</string>
+    <string name="enter_mobile_number_for_registration">Enter mobile number for registration</string>
+    <string name="get_otp_user">GET OTP</string>
+    <string name="app_permissions">App Permissions</string>
+    <string name="enter_otp_send_to_your">Enter OTP send to your</string>
+    <string name="verify_otp">Verify OTP</string>
+    <string name="enter_otp1">Enter OTP</string>
+    <string name="get_otp2">Get OTP</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="choose_what_you_want_to_learn_today">Choose what you want to learn today!</string>
+    <string name="phone_number_user">Phone Number</string>
+    <string name="get_otp3">GET OTP</string>
+    <string name="otp">OTP</string>
+    <string name="verify_otp6">Verify OTP</string>
 </resources>
