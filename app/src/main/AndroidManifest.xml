@@ -80,7 +80,7 @@
             android:name=".ForgetActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Screens.SignUpScreen.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

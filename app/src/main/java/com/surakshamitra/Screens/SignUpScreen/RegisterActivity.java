@@ -1,4 +1,4 @@
-package com.surakshamitra;
+package com.surakshamitra.Screens.SignUpScreen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +25,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.surakshamitra.LoginActivity;
+import com.surakshamitra.MainActivity;
+import com.surakshamitra.R;
+import com.surakshamitra.userDetails;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -34,7 +38,6 @@ public class RegisterActivity extends AppCompatActivity {
     ConstraintLayout loginBack;
     FirebaseAuth auth;
     TextView loginIcon;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,7 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        super.onBackPressed();
         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         finish();
     }
