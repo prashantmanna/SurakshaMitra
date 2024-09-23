@@ -35,7 +35,7 @@ public class myAdaptor extends RecyclerView.Adapter<myAdaptor.ViewHolder> {
 
     private static int lastposition = -1;
 
-    myAdaptor(Context context, ArrayList<model> arrContact) {
+    public myAdaptor(Context context, ArrayList<model> arrContact) {
         this.context = context;
         this.arrContact = arrContact;
         dBhelper = new DBhelper(context);

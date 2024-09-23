@@ -1,4 +1,4 @@
-package com.surakshamitra.Screens.SignUpScreen;
+package com.surakshamitra.Screens.AllScreen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,8 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.surakshamitra.LoginActivity;
-import com.surakshamitra.MainActivity;
 import com.surakshamitra.R;
 import com.surakshamitra.userDetails;
 

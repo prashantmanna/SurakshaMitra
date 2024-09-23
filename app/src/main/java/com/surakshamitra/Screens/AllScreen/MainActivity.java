@@ -1,59 +1,61 @@
-package com.surakshamitra;
+package com.surakshamitra.Screens.AllScreen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.surakshamitra.Profile;
+import com.surakshamitra.R;
+import com.surakshamitra.ScreenFragments.AlertFragment;
+import com.surakshamitra.ScreenFragments.chatfragment;
+import com.surakshamitra.ScreenFragments.contactFragment;
+import com.surakshamitra.ScreenFragments.homefragment;
+import com.surakshamitra.ScreenFragments.safetyfragment;
+import com.surakshamitra.Settings;
 import com.surakshamitra.databinding.ActivityMainBinding;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    DrawerLayout drawerLayout;
+
     NavigationView navigationView;
     Toolbar toolbar;
     ActivityMainBinding mainBinding;
     BottomNavigationView bottomNavigationView;
     FrameLayout frameLayout;
     ImageView camera;
-
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
     FirebaseAuth auth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
         mainBinding.navBar.setBackground(null);
-
-
         auth = FirebaseAuth.getInstance();
         bottomNavigationView = findViewById(R.id.navBar);
         frameLayout = findViewById(R.id.container);
@@ -62,25 +64,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         camera = findViewById(R.id.camera);
 
         drawerLayout = findViewById(R.id.drawerLayout);
-
-
-
-
-
-
-        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(
-                MainActivity.this,
-                drawerLayout,
-                toolbar,
-                R.string.open_drawer,
-                R.string.close_drawer
-        );
-        drawerLayout.addDrawerListener(drawerToggle);
-        navigationView.setNavigationItemSelectedListener(this);
-        drawerToggle.syncState();
-
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.open_drawer,R.string.close_drawer);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
         setSupportActionBar(toolbar);
+        // to make the Navigation drawer icon always appear on the action bar
+        actionBarDrawerToggle.syncState();
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -90,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (id == R.id.homepage) {
                     replaceFragment(new homefragment(), false);
                 } else if (id == R.id.alert) {
-                    replaceFragment(new Alert(), false);
+                    replaceFragment(new AlertFragment(), false);
                 } else if (id == R.id.chats) {
                     replaceFragment(new chatfragment(), false);
                 } else if (id == R.id.tips) {
@@ -106,6 +99,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle if it matches the toggle button
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
     protected void replaceFragment(Fragment fragment, boolean addToBackStack) {
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 public void onClick(View v) {
                     clearSharedPreferences();
                     auth.signOut();
-                    Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
@@ -210,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {

@@ -1,4 +1,4 @@
-package com.surakshamitra;
+package com.surakshamitra.ScreenFragments;
 
 import android.Manifest;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,11 +29,16 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.surakshamitra.GpsDialogUtils;
+import com.surakshamitra.MapActivity;
+import com.surakshamitra.R;
+import com.surakshamitra.contactsDial;
+import com.surakshamitra.currentUserLocation;
+import com.surakshamitra.model;
 
 import java.util.ArrayList;
 
@@ -85,7 +89,7 @@ public class homefragment extends Fragment {
         contactsCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent intent = new Intent(requireContext(),contactsDial.class);
+               Intent intent = new Intent(requireContext(), contactsDial.class);
                startActivity(intent);
             }
         });
@@ -190,7 +194,7 @@ public class homefragment extends Fragment {
         imgBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(requireContext(),MapActivity.class);
+                Intent intent = new Intent(requireContext(), MapActivity.class);
                 startActivity(intent);
             }
         });

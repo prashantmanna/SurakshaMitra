@@ -1,4 +1,4 @@
-package com.surakshamitra;
+package com.surakshamitra.Screens.AllScreen;
 
 import static com.google.android.material.internal.ViewUtils.hideKeyboard;
 
@@ -29,7 +29,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.surakshamitra.Screens.SignUpScreen.RegisterActivity;
+import com.surakshamitra.R;
+import com.surakshamitra.mobileOtp;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -124,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(LoginActivity.this, "You can reset your password now!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginActivity.this,ForgetActivity.class));
+                startActivity(new Intent(LoginActivity.this, ForgetActivity.class));
 
             }
         });

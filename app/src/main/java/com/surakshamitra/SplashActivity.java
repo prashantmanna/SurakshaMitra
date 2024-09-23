@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 
-import com.google.android.material.button.MaterialButton;
+import com.surakshamitra.Screens.AllScreen.LoginActivity;
+import com.surakshamitra.Screens.AllScreen.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
                     if(hasLoggedIn){
-                        startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
                         finish();
                     }
                     else {

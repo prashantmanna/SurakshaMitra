@@ -1,4 +1,4 @@
-package com.surakshamitra;
+package com.surakshamitra.Screens.AllScreen;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +17,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.surakshamitra.R;
 
 public class ForgetActivity extends AppCompatActivity {
 

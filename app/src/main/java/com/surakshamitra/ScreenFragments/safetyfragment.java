@@ -1,5 +1,5 @@
 // SafetyFragment.java
-package com.surakshamitra;
+package com.surakshamitra.ScreenFragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.surakshamitra.R;
+import com.surakshamitra.videoAdaptor;
+import com.surakshamitra.youtubeVideo;
 
 import java.util.ArrayList;
 import java.util.List;

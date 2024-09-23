@@ -4,10 +4,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".MainActivity"
+        tools:context=".Screens.AllScreen.MainActivity"
         android:orientation="vertical"
         android:background="#E6E6FA"
         android:id="@+id/drawerLayout"
+        android:clickable="true"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,8 +21,6 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-
         android:layout_alignParentTop="true"
         app:layout_constraintBottom_toTopOf="@+id/container"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,8 +33,6 @@
             android:layout_height="wrap_content"
             android:background="@color/lavender"
             app:title="@string/app_name"
-
-
             >
 
             <LinearLayout
@@ -43,27 +40,31 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-
-
                 <TextView
-                    android:layout_marginBottom="12dp"
                     android:id="@+id/appName"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:backgroundTint="#FFFFFF"
                     android:text="@string/suraksha"
                     android:textColor="#121111"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/camera"
-                    android:layout_marginEnd="10dp"
-                    android:contentDescription="@string/camera"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/camera"/>
+                    android:contentDescription="@string/camera"
+                    android:src="@drawable/camera"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/appName"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
             </LinearLayout>
@@ -92,8 +93,6 @@
 
         app:menu="@menu/menu_bar"
         android:elevation="20dp"
-
-
         />
 
     </RelativeLayout>

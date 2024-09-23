@@ -49,7 +49,7 @@
         <service
             android:name=".LocationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
 
         <activity
             android:name=".otpactivity"
@@ -63,7 +63,7 @@
         <activity
             android:name=".contactsDial"
             android:exported="false"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".Screens.AllScreen.MainActivity" />
         <activity
             android:name=".MapActivity"
             android:exported="false" />
@@ -77,16 +77,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ForgetActivity"
+            android:name=".Screens.AllScreen.ForgetActivity"
             android:exported="false" />
         <activity
-            android:name=".Screens.SignUpScreen.RegisterActivity"
+            android:name=".Screens.AllScreen.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Screens.AllScreen.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Screens.AllScreen.MainActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
 

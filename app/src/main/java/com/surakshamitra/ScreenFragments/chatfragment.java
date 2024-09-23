@@ -1,5 +1,4 @@
-package com.surakshamitra;
-import android.content.Intent;
+package com.surakshamitra.ScreenFragments;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;

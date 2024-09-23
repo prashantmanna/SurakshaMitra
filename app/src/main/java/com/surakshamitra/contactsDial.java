@@ -1,6 +1,5 @@
 package com.surakshamitra;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.surakshamitra.ScreenFragments.AlertFragment;
+import com.surakshamitra.ScreenFragments.chatfragment;
+import com.surakshamitra.ScreenFragments.contactFragment;
+import com.surakshamitra.ScreenFragments.homefragment;
+import com.surakshamitra.ScreenFragments.safetyfragment;
 
 import java.util.ArrayList;
 
@@ -66,7 +70,7 @@ public class contactsDial extends AppCompatActivity {
                 }else if (id == R.id.alert) {
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.fragment_container, new Alert());
+                    ft.replace(R.id.fragment_container, new AlertFragment());
                     recyclerViewContacts.setVisibility(View.GONE);
                     frameLayout.setVisibility(View.VISIBLE);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(false);

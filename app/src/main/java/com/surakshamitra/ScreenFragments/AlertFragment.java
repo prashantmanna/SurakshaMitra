@@ -1,4 +1,4 @@
-package com.surakshamitra;
+package com.surakshamitra.ScreenFragments;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -27,6 +27,9 @@ import androidx.fragment.app.Fragment;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.surakshamitra.DBhelper;
+import com.surakshamitra.R;
+import com.surakshamitra.model;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +37,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Alert extends Fragment {
+public class AlertFragment extends Fragment {
 
     private static final int PERMISSION_REQUEST_CODE_SMS = 1000;
     private static final String PERMISSION_SMS = Manifest.permission.SEND_SMS;
