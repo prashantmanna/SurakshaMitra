@@ -50,13 +50,8 @@ public class AlertFragment extends Fragment {
 
     CircleImageView img2;
 
-    FloatingActionButton microphone;
     CardView cardAlert;
 
-    LottieAnimationView animationView;
-
-    private MediaRecorder mediaRecorder;
-    private boolean isRecording = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,21 +59,9 @@ public class AlertFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_alert, container, false);
         sos = view.findViewById(R.id.sos);
         dBhelper = new DBhelper(requireContext());
-        microphone = view.findViewById(R.id.microphone);
-        cardAlert = view.findViewById(R.id.cardAlert);
-        animationView = view.findViewById(R.id.audio); // Initialize animationView
-        animationView.setVisibility(View.INVISIBLE);
 
-        microphone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cardAlert.setVisibility(View.INVISIBLE);
-                microphone.setVisibility(View.INVISIBLE);
-                animationView.setVisibility(View.VISIBLE);
-                animationView.playAnimation();
-                startStopRecording();
-            }
-        });
+        cardAlert = view.findViewById(R.id.cardAlert);
+
 
         sos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,37 +74,7 @@ public class AlertFragment extends Fragment {
         return view;
     }
 
-    private void startStopRecording() {
-        if (!isRecording) {
-            if (checkAndRequestAudioPermission()) {
-                startRecording();
-            }
-        } else {
-            stopRecording();
-            stopRecordingAndSendMMS(); // Send recorded audio to contacts after stopping recording
-        }
-    }
 
-    private void stopRecordingAndSendMMS() {
-        if (isRecording) {
-            stopRecording();
-
-            // Get the list of contacts from the database
-            ArrayList<model> contactsList = dBhelper.getAllContactsForSMS();
-
-            if (contactsList.isEmpty()) {
-                Toast.makeText(requireContext(), "No contacts found", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Send MMS to each contact
-            for (model contact : contactsList) {
-                String name = contact.getContact();
-                String number = contact.getNumber();
-                sendAlertMMS(getAudioFilePath(), name, number);
-            }
-        }
-    }
     private String getAudioFilePath() {
         return requireContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC) + "/audio_record.3gp";
     }
@@ -136,45 +89,9 @@ public class AlertFragment extends Fragment {
         return true;
     }
 
-    private void startRecording() {
-        // Initialize MediaRecorder and configure it
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
-        File audioFile = new File(requireContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC), "audio_record.3gp");
 
-        mediaRecorder.setOutputFile(audioFile.getAbsolutePath());
 
-        try {
-            mediaRecorder.prepare();
-            mediaRecorder.start();
-            isRecording = true;
-            Toast.makeText(requireContext(), "Recording started", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void stopRecording() {
-        if (isRecording) {
-            mediaRecorder.stop();
-            mediaRecorder.release();
-            mediaRecorder = null;
-            isRecording = false;
-            Toast.makeText(requireContext(), "Recording stopped", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        // Release MediaRecorder if it's still running when the activity is stopped
-        if (isRecording) {
-            stopRecording();
-        }
-    }
 
     private void checkAndRequestPermissions() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
@@ -216,15 +133,6 @@ public class AlertFragment extends Fragment {
                 sendAlertSMS();
             } else {
                 Toast.makeText(requireContext(), "Permission denied. Cannot send SMS.", Toast.LENGTH_SHORT).show();
-            }
-        }
-        if (requestCode == PERMISSION_REQUEST_RECORD_AUDIO) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, start recording
-                startRecording();
-            } else {
-                // Permission denied, show a message or handle accordingly
-                Toast.makeText(requireContext(), "Permission denied for recording audio", Toast.LENGTH_SHORT).show();
             }
         }
     }
